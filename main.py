@@ -1,30 +1,19 @@
 import param    # contiene il token
-import logging
-from telegram.ext import Updater, CommandHandler
+import telepot
+import time
+from telepot.loop import MessageLoop
 
+def handle(msg):
+    content_type, chat_type, chat_id = telepot.glance(msg)
+    print(content_type, chat_type, chat_id)
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    level=logging.INFO)
+    if content_type == 'text':
+        bot.sendMessage(chat_id, msg['text'])
 
-logger = logging.getLogger(__name__)
+bot = telepot.Bot(param.token)
+MessageLoop(bot, handle).run_as_thread()
+print ('Listening ...')
 
-def helloworld(bot, update):
-    """Send a message when the command /helloworld is issued."""
-    update.message.reply_text('Hello world!')
-
-def error(bot, update, error):
-    """Log Errors caused by Updates."""
-    logger.warning('Update "%s" caused error "%s"', update, error)
-
-def main():
-    '''Start the bot'''
-    updater = Updater(param.token)
-    dp = updater.dispatcher
-    dp.add_handler(CommandHandler("helloworld", helloworld))
-    dp.add_error_handler(error)
-    updater.start_polling()
-    updater.idle()
-
-
-if __name__ == '__main__':
-    main()
+# Keep the program running.
+while 1:
+    time.sleep(10)
