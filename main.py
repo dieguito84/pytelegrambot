@@ -8,12 +8,15 @@ bot = telepot.Bot(param.token)
 def handle(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     print(content_type, chat_type, chat_id)
-
-    if content_type == 'text':
-        bot.sendMessage(chat_id, msg['text'])
+    if content_type == "text":
+        name = msg["from"]["first_name"]
+        txt = msg["text"]
+        if txt.startswith("/helloworld"):
+            bot.sendMessage(chat_id, "Ciao {}!".format(name))
+            bot.sendMessage(chat_id, "Hello World!")
 
 MessageLoop(bot, handle).run_as_thread()
-print ('Listening ...')
+print ("Listening ...")
 
 # Keep the program running.
 while 1:
