@@ -3,6 +3,9 @@ import telepot
 import time
 from telepot.loop import MessageLoop
 
+# telepot is currently inactive and the repository is archived by the owner
+# TODO: rewrite the application using another library. Evaluate python-telegram-bot or pyTelegramBotAPI
+
 bot = telepot.Bot(param.token)
 
 def handle(msg):
